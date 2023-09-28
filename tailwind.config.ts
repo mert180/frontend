@@ -9,12 +9,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        black: "#333333",
+        white: "#EFEFEF",
         purple: {
-          default: "#694281",
-          lighter: "#BBA4D4",
-          darker: "#4A2367",
-          darkest: "#1C062C",
+          light: "#694281",
+          dark: "#4A2367",
         },
+        magnolia: "#EDF4ED",
+        error: "#EDF4ED",
+        warning: "#D6A909",
       },
     },
   },
