@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import { object, string, ref } from "yup";
-import ValidationError from "./form/ValidationError";
 import { Form, Formik } from "formik";
 import InputText from "./form/InputText";
-import InputSelect from "./form/InputSelect";
 import PrimaryButton from "./PrimaryButton";
 import Link from "next/link";
+import axiosInstance from "@/lib/AxiosInstance";
+import { saveToLocalStorage } from "@/lib/LocalStorageHandler";
+import { useRouter } from "next/navigation";
 
 interface LoginFormValues {
   email: string;
@@ -14,6 +14,7 @@ interface LoginFormValues {
 }
 
 const LoginForm = () => {
+  const { push } = useRouter();
   const initialValues: LoginFormValues = {
     email: "",
     password: "",
@@ -24,10 +25,18 @@ const LoginForm = () => {
       <div className="w-60 m-2">
         <Formik
           initialValues={initialValues}
-          onSubmit={(values, actions) => {
-            console.log({ values, actions });
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
+          onSubmit={(values) => {
+            axiosInstance
+              .post("/api/v1/auth/login", values)
+              .then((res) => {
+                saveToLocalStorage("accessToken", res.data.accessToken);
+                saveToLocalStorage("refreshToken", res.data.refreshToken);
+                push("/home");
+              })
+              .catch((err) => {
+                // TODO: handle login error with notification (issue not completed yet).
+                console.log(err);
+              });
           }}
         >
           <div className="border border-purple-light p-4 rounded-md bg-white">
