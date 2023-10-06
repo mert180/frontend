@@ -17,8 +17,8 @@ interface LoginFormValues {
 const LoginForm = () => {
   const { push } = useRouter();
   const initialValues: LoginFormValues = {
-    email: "mertuygur02@gmail.com",
-    password: "hachiko2k",
+    email: "",
+    password: "",
   };
 
   return (
