@@ -7,6 +7,9 @@ import { object, string, ref } from "yup";
 import PrimaryButton from "./PrimaryButton";
 import ValidationError from "./form/ValidationError";
 import Link from "next/link";
+import axiosInstance from "@/lib/AxiosInstance";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface RegisterFormValues {
   firstName: string;
@@ -17,6 +20,7 @@ interface RegisterFormValues {
 }
 
 const RegisterForm = () => {
+  const { push } = useRouter();
   const initialValues: RegisterFormValues = {
     firstName: "",
     email: "",
@@ -53,10 +57,17 @@ const RegisterForm = () => {
         <Formik
           initialValues={initialValues}
           validationSchema={registerSchema}
-          onSubmit={(values, actions) => {
-            console.log({ values, actions });
-            alert(JSON.stringify(values, null, 2));
-            actions.setSubmitting(false);
+          onSubmit={(values) => {
+            // filter out confirmPassword from values
+            const { confirmPassword, ...formValues } = values;
+            axios
+              .post("/api/v1/auth/register", formValues)
+              .then((res) => {
+                push("/auth/login");
+              })
+              .catch((err) => {
+                // TODO: handle register error
+              });
           }}
         >
           {({ errors, touched }) => (
