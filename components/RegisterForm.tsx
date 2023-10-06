@@ -9,6 +9,7 @@ import ValidationError from "./form/ValidationError";
 import Link from "next/link";
 import axiosInstance from "@/lib/AxiosInstance";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface RegisterFormValues {
   firstName: string;
@@ -59,14 +60,13 @@ const RegisterForm = () => {
           onSubmit={(values) => {
             // filter out confirmPassword from values
             const { confirmPassword, ...formValues } = values;
-            axiosInstance
+            axios
               .post("/api/v1/auth/register", formValues)
               .then((res) => {
                 push("/auth/login");
               })
               .catch((err) => {
                 // TODO: handle register error
-                console.log(err);
               });
           }}
         >

@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 
+// TODO: test protected route
 const Home = () => {
-  return <div>Protected Home</div>;
+  return <div></div>;
 };
 
 export default Home;

@@ -7,6 +7,7 @@ import Link from "next/link";
 import axiosInstance from "@/lib/AxiosInstance";
 import { saveToLocalStorage } from "@/lib/LocalStorageHandler";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface LoginFormValues {
   email: string;
@@ -16,8 +17,8 @@ interface LoginFormValues {
 const LoginForm = () => {
   const { push } = useRouter();
   const initialValues: LoginFormValues = {
-    email: "",
-    password: "",
+    email: "mertuygur02@gmail.com",
+    password: "hachiko2k",
   };
 
   return (
@@ -26,16 +27,18 @@ const LoginForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            axiosInstance
-              .post("/api/v1/auth/login", values)
+            axios
+              .post(
+                process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/auth/login",
+                values
+              )
               .then((res) => {
-                saveToLocalStorage("accessToken", res.data.accessToken);
-                saveToLocalStorage("refreshToken", res.data.refreshToken);
+                saveToLocalStorage("accessToken", res?.data?.data?.accessToken);
+                saveToLocalStorage(
+                  "refreshToken",
+                  res?.data?.data?.refreshToken
+                );
                 push("/home");
-              })
-              .catch((err) => {
-                // TODO: handle login error with notification (issue not completed yet).
-                console.log(err);
               });
           }}
         >
