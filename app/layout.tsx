@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Josefin_Sans } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const heptaSlab = Josefin_Sans({ subsets: ["latin"] });
 
@@ -16,7 +18,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="bg-magnolia">
-      <body className={heptaSlab.className}>{children}</body>
+      <body className={heptaSlab.className}>
+        {children}
+
+        <ToastContainer
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+      </body>
     </html>
   );
 }

@@ -4,10 +4,9 @@ import { Form, Formik } from "formik";
 import InputText from "./form/InputText";
 import PrimaryButton from "./PrimaryButton";
 import Link from "next/link";
-import axiosInstance from "@/lib/AxiosInstance";
 import { saveToLocalStorage } from "@/lib/LocalStorageHandler";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import axiosInstance from "@/lib/AxiosInstance";
 
 interface LoginFormValues {
   email: string;
@@ -27,18 +26,23 @@ const LoginForm = () => {
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => {
-            axios
+            axiosInstance
               .post(
                 process.env.NEXT_PUBLIC_BACKEND_URL + "/api/v1/auth/login",
                 values
               )
               .then((res) => {
-                saveToLocalStorage("accessToken", res?.data?.data?.accessToken);
-                saveToLocalStorage(
-                  "refreshToken",
-                  res?.data?.data?.refreshToken
-                );
-                push("/home");
+                if (res.data.success === true) {
+                  saveToLocalStorage(
+                    "accessToken",
+                    res?.data?.data?.accessToken
+                  );
+                  saveToLocalStorage(
+                    "refreshToken",
+                    res?.data?.data?.refreshToken
+                  );
+                  push("/home");
+                }
               });
           }}
         >
