@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getFromLocalStorage, saveToLocalStorage } from "./LocalStorageHandler";
+import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -23,6 +24,12 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
   (response) => {
+    console.log("response", response);
+    if (response?.data?.success === false && response?.data?.message) {
+      toast.error(response?.data?.message);
+    } else if (response?.data?.success === true && response?.data?.message) {
+      toast.success(response?.data?.message);
+    }
     return response;
   },
   (error) => {
@@ -30,7 +37,7 @@ axiosInstance.interceptors.response.use(
     // Prevent infinite loops.
     if (
       error.response.status === 401 &&
-      originalRequest.url === "/api/v1/auth/refresh"
+      originalRequest.url === "/api/v1/auth/refresh-token"
     ) {
       window.location.href = "/auth/login";
       return Promise.reject(error);
