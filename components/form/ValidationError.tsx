@@ -1,8 +1,8 @@
-import Image from "next/image";
-import React from "react";
+import Image from 'next/image'
+import React from 'react'
 
 interface IValidationError {
-  error: string;
+  error: string
 }
 
 const ValidationError = ({ error }: IValidationError) => {
@@ -17,7 +17,7 @@ const ValidationError = ({ error }: IValidationError) => {
       />
       <p className="text-xs text-error">{error}</p>
     </div>
-  );
-};
+  )
+}
 
-export default ValidationError;
+export default ValidationError

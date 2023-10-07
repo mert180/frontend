@@ -1,6 +1,5 @@
-import TextLogo from "@/components/TextLogo";
-import Image from "next/image";
-import Link from "next/link";
+import TextLogo from '@/components/TextLogo'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -10,18 +9,18 @@ export default function Home() {
       </div>
       <div className="flex justify-center items-center">
         <Link
-          href={"/auth/register"}
+          href={'/auth/register'}
           className="text-xl text-center font-bold text-black m-2"
         >
           Register
         </Link>
         <Link
-          href={"/auth/login"}
+          href={'/auth/login'}
           className="text-xl text-center font-bold text-black m-2"
         >
           Login
         </Link>
       </div>
     </main>
-  );
+  )
 }

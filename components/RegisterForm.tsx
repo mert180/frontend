@@ -1,54 +1,54 @@
-"use client";
-import React from "react";
-import { Form, Formik } from "formik";
-import InputText from "./form/InputText";
-import InputSelect from "./form/InputSelect";
-import { object, string, ref } from "yup";
-import PrimaryButton from "./PrimaryButton";
-import ValidationError from "./form/ValidationError";
-import Link from "next/link";
-import axiosInstance from "@/lib/AxiosInstance";
-import { useRouter } from "next/navigation";
+'use client'
+import React from 'react'
+import { Form, Formik } from 'formik'
+import InputText from './form/InputText'
+import InputSelect from './form/InputSelect'
+import { object, string, ref } from 'yup'
+import PrimaryButton from './PrimaryButton'
+import ValidationError from './form/ValidationError'
+import Link from 'next/link'
+import axiosInstance from '@/lib/AxiosInstance'
+import { useRouter } from 'next/navigation'
 
 interface RegisterFormValues {
-  firstName: string;
-  email: string;
-  title: string;
-  password: string;
-  confirmPassword: string;
+  firstName: string
+  email: string
+  title: string
+  password: string
+  confirmPassword: string
 }
 
 const RegisterForm = () => {
-  const { push } = useRouter();
+  const { push } = useRouter()
   const initialValues: RegisterFormValues = {
-    firstName: "",
-    email: "",
-    title: "JUNIOR",
-    password: "",
-    confirmPassword: "",
-  };
+    firstName: '',
+    email: '',
+    title: 'JUNIOR',
+    password: '',
+    confirmPassword: '',
+  }
 
   const registerSchema = object().shape({
     firstName: string()
-      .min(2, "firstname should be at least 2 characters.")
-      .max(20, "firstname cannot be more than 20 characters.")
-      .required("firstname is required"),
-    email: string().email("Invalid email").required("Email is required."),
+      .min(2, 'firstname should be at least 2 characters.')
+      .max(20, 'firstname cannot be more than 20 characters.')
+      .required('firstname is required'),
+    email: string().email('Invalid email').required('Email is required.'),
     password: string()
-      .required("password is required")
-      .min(8, "Password must have at least 8 characters"),
+      .required('password is required')
+      .min(8, 'Password must have at least 8 characters'),
     confirmPassword: string()
-      .required("confirmPassword is required")
-      .oneOf([ref("password")], "Passwords does not match"),
-  });
+      .required('confirmPassword is required')
+      .oneOf([ref('password')], 'Passwords does not match'),
+  })
 
   const showValidationErrors = (errors: any, touched: any) => {
     for (const error in errors) {
       if (error.length > 0 && touched[error]) {
-        return <ValidationError error={errors[error]} />;
+        return <ValidationError error={errors[error]} />
       }
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center my-10">
@@ -57,15 +57,11 @@ const RegisterForm = () => {
           initialValues={initialValues}
           validationSchema={registerSchema}
           onSubmit={(values) => {
-            // filter out confirmPassword from values
-            const { confirmPassword, ...formValues } = values;
-            axiosInstance
-              .post("/api/v1/auth/register", formValues)
-              .then((res) => {
-                if (res.data.success === true) {
-                  push("/auth/login");
-                }
-              });
+            axiosInstance.post('/api/v1/auth/register', values).then((res) => {
+              if (res.data.success === true) {
+                push('/auth/login')
+              }
+            })
           }}
         >
           {({ errors, touched }) => (
@@ -76,7 +72,7 @@ const RegisterForm = () => {
               <Form>
                 <InputText id="firstName" type="text" />
                 <InputText id="email" type="email" />
-                <InputSelect id="title" options={["JUNIOR", "SENIOR"]} />
+                <InputSelect id="title" options={['JUNIOR', 'SENIOR']} />
                 <InputText id="password" type="password" />
                 <InputText id="confirmPassword" type="password" />
                 {showValidationErrors(errors, touched)}
@@ -85,7 +81,7 @@ const RegisterForm = () => {
                 </div>
                 <div className="flex justify-center items-center my-5">
                   <p className="text-xs text-center">
-                    Already have an account? <br />{" "}
+                    Already have an account? <br />{' '}
                     <Link href="/auth/login" className="text-purple-light">
                       Login instead
                     </Link>
@@ -98,7 +94,7 @@ const RegisterForm = () => {
         </Formik>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm
