@@ -13,7 +13,7 @@ axiosInstance.interceptors.request.use(
   (config) => {
     const token = getFromLocalStorage('accessToken')
     if (token) {
-      config.headers['Authorization'] = 'Bearer i' + token
+      config.headers['Authorization'] = 'Bearer ii' + token
     }
     return config
   },
