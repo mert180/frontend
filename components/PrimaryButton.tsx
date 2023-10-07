@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react'
 
 interface IPrimaryButton {
-  text: string;
-  onClick?: () => void;
+  text: string
+  onClick?: () => void
 }
 
 const PrimaryButton = ({ text, onClick }: IPrimaryButton) => {
@@ -14,7 +14,7 @@ const PrimaryButton = ({ text, onClick }: IPrimaryButton) => {
     >
       {text}
     </button>
-  );
-};
+  )
+}
 
-export default PrimaryButton;
+export default PrimaryButton

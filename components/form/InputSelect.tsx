@@ -1,9 +1,9 @@
-import { Field } from "formik";
-import React from "react";
+import { Field } from 'formik'
+import React from 'react'
 
 interface IInputSelect {
-  id: string;
-  options: string[] | number[];
+  id: string
+  options: string[] | number[]
 }
 
 const InputSelect = ({ id, options }: IInputSelect) => {
@@ -22,11 +22,11 @@ const InputSelect = ({ id, options }: IInputSelect) => {
             <option key={option} value={option} className="text-purple-dark">
               {option}
             </option>
-          );
+          )
         })}
       </Field>
     </div>
-  );
-};
+  )
+}
 
-export default InputSelect;
+export default InputSelect

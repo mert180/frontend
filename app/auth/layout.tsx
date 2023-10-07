@@ -1,10 +1,9 @@
-import TextLogo from "@/components/TextLogo";
-import Image from "next/image";
+import TextLogo from '@/components/TextLogo'
 
 export default function AuthLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <div>
@@ -13,5 +12,5 @@ export default function AuthLayout({
       </div>
       <div>{children}</div>
     </div>
-  );
+  )
 }

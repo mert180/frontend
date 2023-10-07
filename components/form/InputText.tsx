@@ -1,9 +1,9 @@
-import { Field } from "formik";
-import React from "react";
+import { Field } from 'formik'
+import React from 'react'
 
 interface IInputText {
-  id: string;
-  type: string;
+  id: string
+  type: string
 }
 
 const InputText = ({ id, type }: IInputText) => {
@@ -18,7 +18,7 @@ const InputText = ({ id, type }: IInputText) => {
         type={type}
       />
     </div>
-  );
-};
+  )
+}
 
-export default InputText;
+export default InputText
